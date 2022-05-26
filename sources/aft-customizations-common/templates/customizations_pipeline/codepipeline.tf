@@ -1,6 +1,11 @@
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
+locals {
+  pre_api_helpers_enabled = var.aft_feature_disable_pre_api_hooks ? null : {"enabled": true}
+  post_api_helpers_enabled = var.aft_feature_disable_post_api_hooks ? null : {"enabled" : true}
+}
+
 resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
   count    = local.vcs.is_codecommit ? 1 : 0
   name     = "${var.account_id}-customizations-pipeline"
@@ -60,28 +65,31 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
   stage {
     name = "Apply-AFT-Global-Customizations"
 
-    action {
-      name            = "Pre-API-Helpers"
-      category        = "Build"
-      owner           = "AWS"
-      provider        = "CodeBuild"
-      input_artifacts = ["source-aft-global-customizations"]
-      version         = "1"
-      run_order       = "1"
-      configuration = {
-        ProjectName = var.aft_global_customizations_api_helpers_codebuild_name
-        EnvironmentVariables = jsonencode([
-          {
-            name  = "VENDED_ACCOUNT_ID",
-            value = var.account_id,
-            type  = "PLAINTEXT"
-          },
-          {
-            name  = "SHELL_SCRIPT",
-            value = "pre-api-helpers.sh",
-            type  = "PLAINTEXT"
-          }
-        ])
+    dynamic "action" {
+      for_each = local.pre_api_helpers_enabled
+      content = {
+        name            = "Pre-API-Helpers"
+        category        = "Build"
+        owner           = "AWS"
+        provider        = "CodeBuild"
+        input_artifacts = ["source-aft-global-customizations"]
+        version         = "1"
+        run_order       = "1"
+        configuration = {
+          ProjectName = var.aft_global_customizations_api_helpers_codebuild_name
+          EnvironmentVariables = jsonencode([
+            {
+              name  = "VENDED_ACCOUNT_ID",
+              value = var.account_id,
+              type  = "PLAINTEXT"
+            },
+            {
+              name  = "SHELL_SCRIPT",
+              value = "pre-api-helpers.sh",
+              type  = "PLAINTEXT"
+            }
+          ])
+        }
       }
     }
 
@@ -105,28 +113,31 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
       }
     }
 
-    action {
-      name            = "Post-API-Helpers"
-      category        = "Build"
-      owner           = "AWS"
-      provider        = "CodeBuild"
-      input_artifacts = ["source-aft-global-customizations"]
-      version         = "1"
-      run_order       = "3"
-      configuration = {
-        ProjectName = var.aft_global_customizations_api_helpers_codebuild_name
-        EnvironmentVariables = jsonencode([
-          {
-            name  = "VENDED_ACCOUNT_ID",
-            value = var.account_id,
-            type  = "PLAINTEXT"
-          },
-          {
-            name  = "SHELL_SCRIPT",
-            value = "post-api-helpers.sh",
-            type  = "PLAINTEXT"
-          }
-        ])
+    dynamic "action" {
+      for_each = local.post_api_helpers_enabled
+      content = {
+        name            = "Post-API-Helpers"
+        category        = "Build"
+        owner           = "AWS"
+        provider        = "CodeBuild"
+        input_artifacts = ["source-aft-global-customizations"]
+        version         = "1"
+        run_order       = "3"
+        configuration = {
+          ProjectName = var.aft_global_customizations_api_helpers_codebuild_name
+          EnvironmentVariables = jsonencode([
+            {
+              name  = "VENDED_ACCOUNT_ID",
+              value = var.account_id,
+              type  = "PLAINTEXT"
+            },
+            {
+              name  = "SHELL_SCRIPT",
+              value = "post-api-helpers.sh",
+              type  = "PLAINTEXT"
+            }
+          ])
+        }
       }
     }
 
@@ -138,28 +149,31 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
   stage {
     name = "Apply-AFT-Account-Customizations"
 
-    action {
-      name            = "Pre-API-Helpers"
-      category        = "Build"
-      owner           = "AWS"
-      provider        = "CodeBuild"
-      input_artifacts = ["source-aft-account-customizations"]
-      version         = "1"
-      run_order       = "1"
-      configuration = {
-        ProjectName = var.aft_account_customizations_api_helpers_codebuild_name
-        EnvironmentVariables = jsonencode([
-          {
-            name  = "VENDED_ACCOUNT_ID",
-            value = var.account_id,
-            type  = "PLAINTEXT"
-          },
-          {
-            name  = "SHELL_SCRIPT",
-            value = "pre-api-helpers.sh",
-            type  = "PLAINTEXT"
-          }
-        ])
+    dynamic "action" {
+      for_each = local.pre_api_helpers_enabled
+      content = {
+        name            = "Pre-API-Helpers"
+        category        = "Build"
+        owner           = "AWS"
+        provider        = "CodeBuild"
+        input_artifacts = ["source-aft-account-customizations"]
+        version         = "1"
+        run_order       = "1"
+        configuration = {
+          ProjectName = var.aft_account_customizations_api_helpers_codebuild_name
+          EnvironmentVariables = jsonencode([
+            {
+              name  = "VENDED_ACCOUNT_ID",
+              value = var.account_id,
+              type  = "PLAINTEXT"
+            },
+            {
+              name  = "SHELL_SCRIPT",
+              value = "pre-api-helpers.sh",
+              type  = "PLAINTEXT"
+            }
+          ])
+        }
       }
     }
 
@@ -183,28 +197,31 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
       }
     }
 
-    action {
-      name            = "Post-API-Helpers"
-      category        = "Build"
-      owner           = "AWS"
-      provider        = "CodeBuild"
-      input_artifacts = ["source-aft-account-customizations"]
-      version         = "1"
-      run_order       = "3"
-      configuration = {
-        ProjectName = var.aft_account_customizations_api_helpers_codebuild_name
-        EnvironmentVariables = jsonencode([
-          {
-            name  = "VENDED_ACCOUNT_ID",
-            value = var.account_id,
-            type  = "PLAINTEXT"
-          },
-          {
-            name  = "SHELL_SCRIPT",
-            value = "post-api-helpers.sh",
-            type  = "PLAINTEXT"
-          }
-        ])
+    dynamic "action" {
+      for_each = local.post_api_helpers_enabled
+      content = {
+        name            = "Post-API-Helpers"
+        category        = "Build"
+        owner           = "AWS"
+        provider        = "CodeBuild"
+        input_artifacts = ["source-aft-account-customizations"]
+        version         = "1"
+        run_order       = "3"
+        configuration = {
+          ProjectName = var.aft_account_customizations_api_helpers_codebuild_name
+          EnvironmentVariables = jsonencode([
+            {
+              name  = "VENDED_ACCOUNT_ID",
+              value = var.account_id,
+              type  = "PLAINTEXT"
+            },
+            {
+              name  = "SHELL_SCRIPT",
+              value = "post-api-helpers.sh",
+              type  = "PLAINTEXT"
+            }
+          ])
+        }
       }
     }
   }

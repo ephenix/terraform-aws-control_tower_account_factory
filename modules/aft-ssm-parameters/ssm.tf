@@ -271,7 +271,17 @@ resource "aws_ssm_parameter" "aft_framework_repo_git_ref" {
   value = var.aft_framework_repo_git_ref
 }
 
+resource "aws_ssm_parameter" "aft_feature_disable_pre_api_hooks" {
+  name  = "/aft/config/feature/disable_pre_api_hooks"
+  type  = "String"
+  value = var.aft_feature_disable_pre_api_hooks
+}
 
+resource "aws_ssm_parameter" "aft_feature_disable_post_api_hooks" {
+  name  = "/aft/config/feature/disable_post_api_hooks"
+  type  = "String"
+  value = var.aft_feature_disable_post_api_hooks
+}
 
 resource "aws_ssm_parameter" "aft_feature_cloudtrail_data_events" {
   name  = "/aft/config/feature/cloudtrail-data-events-enabled"

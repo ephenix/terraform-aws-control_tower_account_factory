@@ -88,3 +88,15 @@ variable "aft_global_customizations_terraform_codebuild_name" {
   description = "CodeBuild Project Name"
   default     = "aft-global-customizations-terraform"
 }
+
+variable "aft_feature_disable_pre_api_hooks" {
+  type        = bool
+  description = "Skip creation of pre-api hooks action"
+  default     = false
+}
+
+variable "aft_feature_disable_post_api_hooks" {
+  type        = bool
+  description = "Skip creation of post-api hooks action"
+  default     = false
+}

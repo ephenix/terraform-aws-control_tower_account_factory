@@ -210,6 +210,14 @@ variable "aft_feature_delete_default_vpcs_enabled" {
   type = string
 }
 
+variable "aft_feature_disable_pre_api_hooks" {
+  type = string
+}
+
+variable "aft_feature_disable_post_api_hooks" {
+  type = string
+}
+
 variable "global_customizations_repo_name" {
   type = string
 }

@@ -9,18 +9,7 @@ variable "aft_kms_key_id" {
   type = string
 }
 
-
-
 variable "aft_kms_key_arn" {
-
-
-
-
-
-
-
-
-
   type = string
 }
 
@@ -118,4 +107,11 @@ variable "customizations_archive_hash" {
 
 variable "global_codebuild_timeout" {
   type = number
+}
+
+variable "aft_feature_disable_pre_api_hooks" {
+  type = bool
+}
+variable "aft_feature_disable_post_api_hooks" {
+  type = bool
 }

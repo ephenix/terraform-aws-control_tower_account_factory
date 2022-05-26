@@ -143,6 +143,26 @@ variable "aft_feature_delete_default_vpcs_enabled" {
   }
 }
 
+variable "aft_feature_disable_pre_api_hooks" {
+  description = "Feature flag disabling pre-api hooks to speed up customization builds"
+  type        = bool
+  default     = false
+  validation {
+    condition     = contains([true, false], var.aft_feature_disable_pre_api_hooks)
+    error_message = "Valid values for var: aft_feature_disable_pre_api_hooks are (true, false)."
+  }
+}
+
+variable "aft_feature_disable_post_api_hooks" {
+  description = "Feature flag disabling post-api hooks to speed up customization builds"
+  type        = bool
+  default     = false
+  validation {
+    condition     = contains([true, false], var.aft_feature_disable_post_api_hooks)
+    error_message = "Valid values for var: aft_feature_disable_post_api_hooks are (true, false)."
+  }
+}
+
 #########################################
 # AFT Customer VCS Variables
 #########################################

@@ -119,6 +119,8 @@ module "aft_customizations" {
   customizations_archive_path                       = module.packaging.customizations_archive_path
   customizations_archive_hash                       = module.packaging.customizations_archive_hash
   global_codebuild_timeout                          = var.global_codebuild_timeout
+  aft_feature_disable_pre_api_hooks                 = var.aft_feature_disable_pre_api_hooks
+  aft_feature_disable_post_api_hooks                = var.aft_feature_disable_post_api_hooks
 }
 
 module "aft_feature_options" {
@@ -235,6 +237,8 @@ module "aft_ssm_parameters" {
   aft_feature_cloudtrail_data_events                          = var.aft_feature_cloudtrail_data_events
   aft_feature_enterprise_support                              = var.aft_feature_enterprise_support
   aft_feature_delete_default_vpcs_enabled                     = var.aft_feature_delete_default_vpcs_enabled
+  aft_feature_disable_pre_api_hooks                           = "${var.aft_feature_disable_pre_api_hooks}"
+  aft_feature_disable_post_api_hooks                          = "${var.aft_feature_disable_post_api_hooks}"
   account_customizations_repo_name                            = var.account_customizations_repo_name
   account_customizations_repo_branch                          = var.account_customizations_repo_branch
   global_customizations_repo_name                             = var.global_customizations_repo_name

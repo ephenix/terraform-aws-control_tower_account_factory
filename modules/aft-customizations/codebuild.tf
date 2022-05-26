@@ -279,6 +279,18 @@ resource "aws_codebuild_project" "aft_create_pipeline" {
       value = var.aft_tf_version_ssm_path
       type  = "PLAINTEXT"
     }
+
+    environment_variable {
+      name  = "TF_VAR_aft_feature_disable_pre_api_hooks"
+      value = "${var.aft_feature_disable_pre_api_hooks}"
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_aft_feature_disable_post_api_hooks"
+      value = "${var.aft_feature_disable_post_api_hooks}"
+      type  = "PLAINTEXT"
+    }
   }
 
   logs_config {
