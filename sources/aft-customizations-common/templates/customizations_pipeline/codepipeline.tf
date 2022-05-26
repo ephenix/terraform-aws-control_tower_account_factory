@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 locals {
-  pre_api_helpers_enabled = var.aft_feature_disable_pre_api_hooks ? null : {"enabled": true}
-  post_api_helpers_enabled = var.aft_feature_disable_post_api_hooks ? null : {"enabled" : true}
+  pre_api_helpers_enabled = var.aft_feature_disable_pre_api_hooks ? {} : {"enabled": true}
+  post_api_helpers_enabled = var.aft_feature_disable_post_api_hooks ? {} : {"enabled" : true}
 }
 
 resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
