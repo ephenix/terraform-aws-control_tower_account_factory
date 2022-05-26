@@ -67,7 +67,7 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
 
     dynamic "action" {
       for_each = local.pre_api_helpers_enabled
-      content = {
+      content {
         name            = "Pre-API-Helpers"
         category        = "Build"
         owner           = "AWS"
@@ -115,7 +115,7 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
 
     dynamic "action" {
       for_each = local.post_api_helpers_enabled
-      content = {
+      content {
         name            = "Post-API-Helpers"
         category        = "Build"
         owner           = "AWS"
@@ -151,7 +151,7 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
 
     dynamic "action" {
       for_each = local.pre_api_helpers_enabled
-      content = {
+      content {
         name            = "Pre-API-Helpers"
         category        = "Build"
         owner           = "AWS"
@@ -199,7 +199,7 @@ resource "aws_codepipeline" "aft_codecommit_customizations_codepipeline" {
 
     dynamic "action" {
       for_each = local.post_api_helpers_enabled
-      content = {
+      content {
         name            = "Post-API-Helpers"
         category        = "Build"
         owner           = "AWS"
